@@ -15,6 +15,7 @@ export default function Home() {
       try {
         setIsLoading(true);
         setError(null);
+        console.log('Fetching data from:', process.env.NEXT_PUBLIC_API_URL);
         const data = await getDashboardData();
         setDashboardData(data);
       } catch (err) {
@@ -35,6 +36,7 @@ export default function Home() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mb-4"></div>
           <p className="text-gray-600">Loading dashboard data...</p>
+          <p className="text-sm text-gray-500 mt-2">API URL: {process.env.NEXT_PUBLIC_API_URL || 'Not configured'}</p>
         </div>
       </div>
     );
@@ -46,6 +48,11 @@ export default function Home() {
         <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-2xl w-full mx-4">
           <h2 className="text-red-800 text-lg font-semibold mb-2">Error Loading Dashboard</h2>
           <p className="text-red-600 mb-4">{error}</p>
+          <div className="text-sm text-red-500 mb-4">
+            <p>Debug Info:</p>
+            <p>API URL: {process.env.NEXT_PUBLIC_API_URL || 'Not configured'}</p>
+            <p>Environment: {process.env.NODE_ENV}</p>
+          </div>
           <button
             onClick={() => window.location.reload()}
             className="bg-red-100 text-red-800 px-4 py-2 rounded hover:bg-red-200 transition-colors"
